@@ -1,14 +1,11 @@
 [Desktop Entry]
+Type=Application
 Name=Citrix Workspace
 Comment=Citrix Workspace + HDX RTME Flatpak
-Exec=/app/bin/run.sh
+StartupWMClass=Wfica
+NoDisplay=true
+TryExec=/app/ICAClient/linuxx64/wfica
+Exec=/app/ICAClient/linuxx64/wfica -icaroot /app/ICAClient/linuxx64 %f
 Icon=ca.dcloud.ICAClient
-Terminal=false
-Type=Application
 Categories=Network;Office;
-MimeType=application/x-ica;application/vnd.citrix.receiver.configure;
-Actions=Preferences
-
-[Desktop Action Preferences]
-Name=Preferences
-Exec=/app/ICAClient/linuxx64/util/configmgr
+MimeType=application/x-ica;
