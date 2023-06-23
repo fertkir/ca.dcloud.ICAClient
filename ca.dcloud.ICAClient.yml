@@ -1,7 +1,7 @@
 app-id: ca.dcloud.ICAClient
-runtime: org.gnome.Platform
-runtime-version: '42'
-sdk: org.gnome.Sdk
+runtime: org.fedoraproject.Platform
+runtime-version: f38
+sdk: org.fedoraproject.Sdk
 command: /app/bin/run.sh
 
 build-options:
@@ -20,12 +20,12 @@ finish-args:
   - --persist=.ICAClient #Log/config directory (relative to the Flatpak container home folder)
 
 modules: #Requirements as per Citrix's site, that aren't included in the Flatpak runtime. https://docs.citrix.com/en-us/citrix-workspace-app-for-linux/system-requirements.html
-  - name: gtk2  
+  - name: gtk2
     buildsystem: autotools
     sources:
        - type: archive
          url: http://archive.ubuntu.com/ubuntu/pool/main/g/gtk+2.0/gtk+2.0_2.24.33.orig.tar.xz
-         sha256: ac2ac757f5942d318a311a54b0c80b5ef295f299c2a73c632f6bfb1ff49cc6da         
+         sha256: ac2ac757f5942d318a311a54b0c80b5ef295f299c2a73c632f6bfb1ff49cc6da
 
   - name: libjson-c #Listed as a requirement "for instrumentation", not sure what that refers to
     buildsystem: cmake
