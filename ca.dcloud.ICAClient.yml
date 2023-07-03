@@ -59,11 +59,6 @@ modules: #Requirements as per Citrix's site, that aren't included in the Flatpak
          url: http://archive.ubuntu.com/ubuntu/pool/main/g/gnome-keyring/gnome-keyring_42.1.orig.tar.xz
          sha256: c7f4d040cc76a6b7fe67e08ef9106911c3c80d40fc88cbfc8e2684a4c946e3e6
 
-  #Copies the launch/initial setup script from this project to the app directory.
-  #Downloads the installer archives for Workspace and HDX-RTME. The download links are dynamic, so they can't be hardcoded into this manifest. They have to be obtained by scraping the Citrix downloads page every time
-  #Performs Citrix install as per the install.sh script
-  #Copies Citrix icons to the folders where flatpak expects them, to be used as app icons.
-
   - name: icaclient
     buildsystem: simple
     build-commands:
