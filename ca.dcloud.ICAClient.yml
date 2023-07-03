@@ -14,9 +14,8 @@ finish-args:
   - --socket=pulseaudio
   - --socket=fallback-x11
   - --share=ipc #Required for X11 to work properly
-  - --env=ICAROOT=/app/ICAClient/linuxx64 
+  - --env=ICAROOT=/app/ICAClient/linuxx64
   - --socket=wayland
-  - --persist=. #Gives the app a persistent that is treated as the home directory, located at ~/.var/app/ca.dcloud.ICAClient
   - --persist=.ICAClient #Log/config directory (relative to the Flatpak container home folder)
 
 modules: #Requirements as per Citrix's site, that aren't included in the Flatpak runtime. https://docs.citrix.com/en-us/citrix-workspace-app-for-linux/system-requirements.html
@@ -65,86 +64,27 @@ modules: #Requirements as per Citrix's site, that aren't included in the Flatpak
   #Performs Citrix install as per the install.sh script
   #Copies Citrix icons to the folders where flatpak expects them, to be used as app icons.
 
-  - name: bootstrap
+  - name: icaclient
     buildsystem: simple
     build-commands:
       - |
-        cp ./install.sh /tmp 
-        chmod +x /tmp/install.sh
-
-        wget $(wget -O - https://www.citrix.com/downloads/workspace-app/linux/workspace-app-for-linux-latest.html | sed -ne '/linuxx64.*tar.gz/ s/<a .* rel="\(.*\)" id="downloadcomponent">/https:\1/p' | sed -e 's/\r//g') -O /tmp/linuxx64.tar.gz
-        tempURL=$(wget -O - https://www.citrix.com/downloads/workspace-app/additional-client-software/hdx-realtime-media-engine.html | grep -m 1 -e 'rel="https.*hdx-realtime-media-engine-.*html"' | sed -ne 's/<a .* rel="\(.*\)" id="downloadcomponent.*">/\1/p')
-        wget $(wget -O - $tempURL | sed -ne '/HDX.*zip/ s/<a .* rel="\(.*\)" id="downloadcomponent_3">/https:\1/p' | sed -e 's/\r//g') -O /tmp/hdx.zip
-
-        mkdir -p /tmp/icaclient
-        tar -zxf /tmp/linuxx64.tar.gz --directory=/tmp/icaclient
-        mkdir -p /app/share/icons/hicolor/64x64/apps
-        cp /tmp/icaclient/linuxx64/linuxx64.cor/icons/000_Receiver_64.png /app/share/icons/hicolor/64x64/apps/ca.dcloud.ICAClient.png
-        mkdir -p /app/share/icons/hicolor/256x256/apps
-        cp /tmp/icaclient/linuxx64/linuxx64.cor/icons/receiver.png /app/share/icons/hicolor/256x256/apps/ca.dcloud.ICAClient.png
-
-        unzip /tmp/hdx.zip -d /tmp/HDX-RTME
-        cp -r /tmp/HDX-RTME/HDX*/* /tmp/icaclient
-        cd /tmp/icaclient/x86_64
-        ar -x citrix-hdx-realtime-media-engine_*_amd64.deb
-        tar -xf data.tar.xz
-
-        /tmp/install.sh
-
-        ln -s /etc/ssl/certs/*.pem /app/ICAClient/linuxx64/keystore/cacerts/
-        /app/ICAClient/linuxx64/util/ctx_rehash /app/ICAClient/linuxx64/keystore/cacerts/
-
+        cp ./install-icaclient.sh /tmp
+        chmod +x /tmp/install-icaclient.sh
+        /tmp/install-icaclient.sh
     sources:
       - type: file
-        path: ./install.sh
+        path: ./install-icaclient.sh
 
-  #When the app is launched on Ubuntu (Gnome 38), it complains about being unable to find the atk-bridge module. However, everything seems to still work fine without it.
-  #This package seems to be related to an accessibility features interface (AT-SPI), so it's possible that there are some accessibility features that may not work without this module installed
-  # - name: atk-bridge
-  #   buildsystem: meson
-  #   sources:
-  #      - type: archive
-  #        url: http://archive.ubuntu.com/ubuntu/pool/main/a/at-spi2-atk/at-spi2-atk_2.38.0.orig.tar.xz
-  #        sha256: cfa008a5af822b36ae6287f18182c40c91dd699c55faa38605881ed175ca464f
-  #
-  # - name: canberra-gtk
-  #   buildsystem: autotools
-  #   sources:
-  #      - type: archive
-  #        url: http://archive.ubuntu.com/ubuntu/pool/main/libc/libcanberra/libcanberra_0.30.orig.tar.xz
-  #        sha256: c2b671e67e0c288a69fc33dc1b6f1b534d07882c2aceed37004bf48c601afa72   
-  #
-  # - name: perl
-  #   sources:
-  #     - type: archive
-  #       url: "http://www.cpan.org/src/5.0/perl-5.32.0.tar.gz"
-  #       sha256: efeb1ce1f10824190ad1cadbcccf6fdb8a5d37007d0100d2d9ae5f2b5900c0b4
-  #     - type: script
-  #       dest-filename: configure
-  #       commands:
-  #         - ./Configure -des -Dprefix=/app
-  #   post-install:
-  #     - "find /app/lib/perl5 -type f -exec chmod u+w {} \\;"
-  #     
-  # - name: openssl
-  #   buildsystem: simple
-  #   build-commands:
-  #     - |
-  #       ./config --prefix=/app
-  #       make
-  #       make test
-  #       PREFIX=/app make install
-  #   sources:
-  #     - type: archive
-  #       url: http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/openssl_1.1.1j.orig.tar.gz
-  #       sha256: aaf2fcb575cdf6491b98ab4829abf78a3dec8402b8b81efc8f23c00d443981bf
-  #
-  #- name: binutils
-    #buildsystem: autotools
-    #sources:
-       #- type: archive
-         #url: https://ftp.wayne.edu/gnu/binutils/binutils-2.37.tar.xz
-         #sha256: 820d9724f020a3e69cb337893a0b63c2db161dadcb0e06fc11dc29eb1e84a32c
+  - name: skype-plugin
+    buildsystem: simple
+    build-commands:
+      - |
+        cp ./install-skype-plugin.sh /tmp
+        chmod +x /tmp/install-skype-plugin.sh
+        /tmp/install-skype-plugin.sh
+    sources:
+      - type: file
+        path: ./install-skype-plugin.sh
 
   - name: Run-script
     buildsystem: simple
@@ -154,7 +94,7 @@ modules: #Requirements as per Citrix's site, that aren't included in the Flatpak
         chmod +x /app/bin/run.sh
     sources:
       - type: file
-        path: ./run.sh  
+        path: ./run.sh
 
   - name: Appdata-xml
     buildsystem: simple

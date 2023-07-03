@@ -1,10 +1,13 @@
 #!/bin/bash
 
-#Set the default install directory in the Workspace install script
-sed -ie 's/DefaultInstallDir=.*$/DefaultInstallDir=\/app\/ICAClient\/linuxx64/' /tmp/icaclient/linuxx64/hinst
-#The installation options selected below answer yes to using the gstreamer pluging from ICAClient. The "app protection component" and USB support
-#require the installer to be run as root, so they cannot be installed in this case.
-echo -e "1\n\ny\ny\n3\n" | /tmp/icaclient/setupwfc
+tempURL=$(wget -O - https://www.citrix.com/downloads/workspace-app/additional-client-software/hdx-realtime-media-engine.html | grep -m 1 -e 'rel="https.*hdx-realtime-media-engine-.*html"' | sed -ne 's/<a .* rel="\(.*\)" id="downloadcomponent.*">/\1/p')
+wget -O /tmp/hdx.zip $(wget -O - $tempURL | sed -ne '/HDX.*zip/ s/<a .* rel="\(.*\)" id="downloadcomponent_3">/https:\1/p' | sed -e 's/\r//g')
+
+unzip /tmp/hdx.zip -d /tmp/HDX-RTME
+cp -r /tmp/HDX-RTME/HDX*/* /tmp/icaclient
+cd /tmp/icaclient/x86_64
+ar -x citrix-hdx-realtime-media-engine_*_amd64.deb
+tar -xf data.tar.xz
 
 #HDX RTME requires some directories for storing settings, log, and version info. These directories aren't persistant
 #so they get recreated everytime the Flatpak is run. I haven't observed any negative effects from settings being wiped every time the app closes.
@@ -35,5 +38,3 @@ if [ -s "./new_module.ini" ] ; then
 fi
 rm -rf ./module.ini
 rm -rf ./new_module.ini
-
-exit
