@@ -71,6 +71,19 @@ modules: #Requirements as per Citrix's site, that aren't included in the Flatpak
         path: ./install-icaclient.sh
 
   - name: skype-plugin
+    disabled: true
+    buildsystem: simple
+    build-commands:
+      - |
+        cp ./install-skype-plugin.sh /tmp
+        chmod +x /tmp/install-skype-plugin.sh
+        /tmp/install-skype-plugin.sh
+    sources:
+      - type: file
+        path: ./install-skype-plugin.sh
+
+  - name: zoom-plugin
+    disabled: true
     buildsystem: simple
     build-commands:
       - |
