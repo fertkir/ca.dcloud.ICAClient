@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Name=Add Citrix Store
+NoDisplay=true
+MimeType=application/vnd.citrix.receiver.configure;
+Categories=Application;Network;X-Red-Hat-Base;X-SuSE-Core-Internet;
+Icon=/app/ICAClient/linuxx64/icons/receiver.png
+TryExec=/app/ICAClient/linuxx64/util/new_store
+Exec=/app/ICAClient/linuxx64/util/new_store -icaroot /app/ICAClient/linuxx64 %f

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Name=Citrix Workspace (configmgr)
+NoDisplay=true
+Categories=Application;Network;X-Red-Hat-Base;X-SuSE-Core-Internet;
+Icon=/app/ICAClient/linuxx64/icons/receiver.png
+TryExec=/app/ICAClient/linuxx64/util/configmgr
+Exec=/app/ICAClient/linuxx64/util/configmgr -icaroot /app/ICAClient/linuxx64

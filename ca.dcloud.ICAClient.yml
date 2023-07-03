@@ -83,16 +83,16 @@ modules:
             sha256: 4969c409cb6a88317d2108b8577108e18623b2333d7b587ae3f39459c70e3a7f
 
   - name: zoom-plugin
-    disabled: true
+    disabled: false
     buildsystem: simple
     build-commands:
       - |
-        cp ./install-skype-plugin.sh /tmp
-        chmod +x /tmp/install-skype-plugin.sh
-        /tmp/install-skype-plugin.sh
+        cp ./install-zoom-plugin.sh /tmp
+        chmod +x /tmp/install-zoom-plugin.sh
+        /tmp/install-zoom-plugin.sh
     sources:
       - type: file
-        path: ./install-skype-plugin.sh
+        path: ./install-zoom-plugin.sh
 
   - name: Run-script
     buildsystem: simple
@@ -120,8 +120,20 @@ modules:
     build-commands:
       - |
         mkdir -p /app/share/applications
-        cp ./ca.dcloud.ICAClient.desktop /app/share/applications/
-        desktop-file-validate /app/share/applications/ca.dcloud.ICAClient.desktop
+        cp *.desktop /app/share/applications/
+        desktop-file-validate /app/share/applications/*.desktop
     sources:
       - type: file
-        path: ./ca.dcloud.ICAClient.desktop
+        path: desktop/configmgr.desktop
+      - type: file
+        path: desktop/conncenter.desktop
+      - type: file
+        path: desktop/new_store.desktop
+      - type: file
+        path: desktop/receiver.desktop
+      - type: file
+        path: desktop/receiver_fido2.desktop
+      - type: file
+        path: desktop/selfservice.desktop
+      - type: file
+        path: desktop/wfica.desktop
