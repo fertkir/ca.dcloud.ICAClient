@@ -15,12 +15,10 @@ You should be able to install all of these through your distro's package manager
 ## Instructions
 Perform the [flatpak setup](https://flatpak.org/setup/).  
 Add the flathub remote, and install the Gnome SDK and runtime:  
-*flatpak remote-add --user --if-not-exists fedora oci+https://registry.fedoraproject.org
-flatpak install --user fedora org.fedoraproject.Platform/x86_64/f38
-flatpak install --user fedora org.fedoraproject.Sdk/x86_64/f38*
+*flatpak remote-add --user --if-not-exists fedora oci+https://registry.fedoraproject.org*
 
 Clone/download this repo. Open a terminal in the folder where you downloaded this repo, and run the following:  
-*flatpak-builder --user --install --force-clean icaclient ca.dcloud.ICAClient.yml*  
+*flatpak-builder --install-deps-from=fedora --user --install --force-clean icaclient ca.dcloud.ICAClient.yml*  
 (If your distro uses musl libc rather than the tyipcal GNU libc, you may have to add the flag "--disable-rofiles-fuse" due to [this bug](https://github.com/flatpak/flatpak-builder/issues/329))  
 
 It will take some time to download sources and build. Once it is finished, it should be automatially added to your application launcher (may need to log out and back in for it to show up), if not you can launch it via:  
