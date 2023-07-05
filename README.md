@@ -1,6 +1,12 @@
 # ca.dcloud.ICAClient
 Build and install the Citrix Workspace app (ICAClient) + HDX RealTime Media Engine for Skype as a Flatpak application for Linux.
 
+# 🚨 Notes on Zoom plugin support
+Zoom plugin contains its configuration in `/etc/zoomvdi/ZoomMedia.ini`. In a flatpak this path is not writable.
+The only ways I see:
+* create a custom flatpak platform (which is too time-consuming)
+* find a workaround to make Zoom plugin read its configs from a custom place (finding which I didn't succeed in)
+
 # 🚨 Project not receiving maintenance
 
 Shortly after creating this project, I stopped requiring the use of Citrix Workspace for my job. I stopped maintaining this shortly after (~Jan 2022). I  may eventually archive this repo. But if anyone is interested please feel free to fork and continue work on it.
