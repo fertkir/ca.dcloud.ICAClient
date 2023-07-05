@@ -1,4 +1,4 @@
-# ca.dcloud.ICAClient
+# Citrix Workspace with Zoom plugin
 Build and install the Citrix Workspace app (ICAClient) + HDX RealTime Media Engine for Skype as a Flatpak application for Linux.
 
 # 🚨 Notes on Zoom plugin support
