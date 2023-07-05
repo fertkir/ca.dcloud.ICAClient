@@ -9,14 +9,15 @@ build-options:
     - --share=network
 
 finish-args:
-  - --device=all  #For webcam/microphone access. Future work will be to remove this permission, and replace with a more restrictive one for those devices only
+  - --device=all  #For webcam/microphone access
   - --share=network
   - --socket=pulseaudio
   - --socket=fallback-x11
   - --share=ipc #Required for X11 to work properly
   - --env=ICAROOT=/app/ICAClient/linuxx64
   - --socket=wayland
-  - --persist=.ICAClient #Log/config directory (relative to the Flatpak container home folder)
+  - --persist=.ICAClient
+  - --persist=.zoomvdi
 
 modules:
   - name: icaclient
